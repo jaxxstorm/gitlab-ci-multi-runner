@@ -17,6 +17,10 @@ RUN curl -s https://packages.gitlab.com/install/repositories/runner/gitlab-ci-mu
 ADD entrypoint /
 RUN chmod +x /entrypoint
 
+# Update certs
+RUN /usr/bin/update-ca-trust enable
+RUN /usr/bin/update-ca-trust
+
 VOLUME ["/etc/gitlab-runner", "/home/gitlab-runner"]
 ENTRYPOINT ["/usr/bin/dumb-init", "/entrypoint"]
 CMD ["run", "--user=gitlab-runner", "--working-directory=/home/gitlab-runner"]
